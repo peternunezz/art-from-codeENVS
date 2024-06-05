@@ -1,0 +1,731 @@
+library(ggplot2) 
+library(tibble) 
+mpg
+
+
+```{r tutorial 1}
+mpg #data set
+mpg |>  
+  ggplot(aes(displ, hwy, colour = drv)) + #creating the plot, specifying x and y axes
+  geom_point()     #creating the scatterplot
+``` 
+
+
+```{r tutorial 2}
+mpg |>
+  ggplot(aes(displ, hwy, colour = drv, size = cyl)) + #varying size of the points
+  geom_point(show.legend = FALSE) + #getting rid of the legend 
+  theme_void() + #getting rid of gridlines and axes
+  scale_color_brewer() #changing the color of the dots 
+```
+
+```{r tutorial 3}
+mpg |>
+  ggplot(aes(displ, hwy, colour = drv)) + 
+  geom_point(show.legend = FALSE, size = 4) +  #adds points, hiding legend, editing the size of the points 
+  geom_point(show.legend = FALSE, size = 1, colour = "#222222") + #another layer of smaller points and a specific color
+  coord_polar() + #makes the points into a circle 
+  theme_void() + #removing backround elements 
+  scale_color_brewer() #changes the pallette of the colors 
+```
+
+
+```{r tutorial 4}
+set.seed(1) #random number generator 
+n <- 50 #generates 50 data points 
+dat <- tibble( #creates a data frame 
+  x0 = runif(n), #creates random numbers w/ variable x0
+  y0 = runif(n), #creates random numbers w/ variable y0
+  x1 = x0 + runif(n, min = -.2, max = .2), #adds a radom number to x0 to create x1
+  y1 = y0 + runif(n, min = -.2, max = .2), #adds a random number to y0 to creats y1
+  shade = runif(n), #randomly assigns a shade to each variable
+  size = runif(n) #randomly assigns a size to each variable 
+)
+dat
+```
+
+
+```{r tutorial 5}
+dat |> 
+  ggplot(aes( #creates an object
+    x = x0, #x0 on the x-axis
+    y = y0, #y0 on the y-axis
+    xend = x1, #maps x1 to the end points of the x-axis 
+    yend = y1, #maps y1 to the end points of the y-axis 
+    colour = shade, #assigns shade number to the color of the points
+    size = size #assigns size number to the size of the points 
+  )) +
+  geom_segment(show.legend = FALSE) + #hides legend, creates line segments 
+  coord_polar() + #makes the points circular 
+  scale_y_continuous(expand = c(0, 0)) + #expands y axis 
+  scale_x_continuous(expand = c(0, 0)) + #expands x axis 
+  scale_color_viridis_c() + #color shade 
+  scale_size(range = c(0, 10)) + #different sizes for different points 
+  theme_void() #gets rid of backround elements 
+```
+
+
+```{r tutorial}
+ # data frame containing random values for 
+  # aesthetics we might want to use in the art
+  dat <- tibble(
+    x0 = runif(n),
+    y0 = runif(n),
+    x1 = x0 + runif(n, min = -.2, max = .2),
+    y1 = y0 + runif(n, min = -.2, max = .2),
+    shade = runif(n), 
+    size = runif(n)
+  )
+  
+  # plot segments in various colours, using 
+  # polar coordinates and a gradient palette
+  dat |> 
+    ggplot(aes(
+      x = x0,
+      y = y0,
+      xend = x1,
+      yend = y1,
+      colour = shade,
+      size = size
+    )) +
+    geom_segment(show.legend = FALSE) +
+    coord_polar() +
+    scale_y_continuous(expand = c(0, 0)) +
+    scale_x_continuous(expand = c(0, 0)) + 
+    scale_colour_gradient() + 
+    scale_size(range = c(0, 10)) + 
+    theme_void()
+  polar_art(seed = 1, n = 500, palette = c("antiquewhite", "orange", "bisque"))
+polar_art(seed = 1, n = 500, palette = c("red", "black", "white"))
+polar_art(seed = 2, n = 50, palette = c("red", "black", "white"))
+```
+
+```{r tutorial 6}
+source("~/Downloads/ENVS-193DS/art-from-codeENVS/materials/polar-art.R")
+
+```
+
+
+
+```{r tutorial 7}
+library(scales)
+library(ggthemes)
+pal <- c("#cdb4db", "#ffc8dd", "#ffafcc", "#bde0fe", "#a2d2ff") #creates pallette 
+show_col(pal) #displays pallette 
+palette_fn <- colorRampPalette(pal) #generates spectrum of colors using the 5 from above 
+palette_fn(100) #crates 100 colors along the spectrum of colors 
+image(
+  x = matrix(1:100, ncol = 1), #specifies what colors to use 
+  col = palette_fn(100), #creates smooth palette 
+  useRaster = TRUE,
+  axes = FALSE
+)
+```
+
+
+```{r tutorial 6}
+source("~/Downloads/ENVS-193DS/art-from-code/materials/polar-art.R")
+
+```
+
+```{r tutorial 8}
+canva_palettes[[101]] #creates palette 
+show_col(canva_palettes[[101]]) #shows palette colors 
+
+sample_canva <- function(seed = NULL) {#creates object
+  if(!is.null(seed)) set.seed(seed) 
+  sample(ggthemes::canva_palettes, 1)[[1]] #randomly generates a palette from the list 
+}
+polar_art(seed = 2, n = 100, palette = sample_canva(seed = 2))
+polar_art(seed = 2, n = 100, palette = sample_canva(seed = 3))
+polar_art(seed = 2, n = 100, palette = sample_canva(seed = 4)) #three different visualizations with randomly assigned color palettes 
+
+```
+
+
+```{r tutorial 9}
+polar_art(seed = 5, n = 100, palette = sample_canva(seed = 1))
+polar_art(seed = 6, n = 100, palette = sample_canva(seed = 1))
+polar_art(seed = 7, n = 100, palette = sample_canva(seed = 1)) #three different visualizations with three different configurations, but the same color palette 
+
+```
+
+
+```{r tutorial 10}
+
+
+sample_data <- function(seed = NULL, n = 100){ #creating new object 
+  if(!is.null(seed)) set.seed(seed)
+  dat <- tibble( #using dat data frame 
+    x0 = runif(n), #creates random numbers w/ variable x0
+    y0 = runif(n), #creates random numbers w/ variable y0
+    x1 = x0 + runif(n, min = -.2, max = .2), #adds a radom number to x0 to create x1
+    y1 = y0 + runif(n, min = -.2, max = .2), #adds a random number to y0 to creats y1
+    shade = runif(n), #randomly assigns a shade to each variable
+    size = runif(n), #randomly assigns a size to each variable 
+    shape = factor(sample(0:22, size = n, replace = TRUE)) 
+  )
+}
+
+```
+
+
+```{r tutorial 11}
+polar_styled_plot <- function(data = NULL, palette) { #creates a function with two arguments 
+  ggplot( 
+    data = data,
+    mapping = aes(
+      x = x0,
+      y = y0,
+      xend = x1,
+      yend = y1,
+      colour = shade,
+      size = size #constructs a ggplot, mapping which variables go where 
+    )) + 
+    coord_polar(clip = "off") + #makes the data points circular 
+    scale_y_continuous(
+      expand = c(0, 0),
+      limits = c(0, 1), 
+      oob = scales::oob_keep #defines limits and boundaries of y-axis 
+    ) +
+    scale_x_continuous(
+      expand = c(0, 0), 
+      limits = c(0, 1), 
+      oob = scales::oob_keep #defines limits and boundaries of x-axis
+    ) + 
+    scale_colour_gradientn(colours = palette) + #color palette
+    scale_size(range = c(0, 10)) + #defines how big data points are 
+    theme_void() + #gets rid of background elements 
+    guides(
+      colour = guide_none(),
+      size = guide_none(),
+      fill = guide_none(),
+      shape = guide_none() #removes aesthetics 
+    )}
+
+```
+
+```{r tutorial 12}
+dat <- sample_data(n = 100, seed = 1) #creates sample datatset with 100 observations 
+pal <- sample_canva(seed = 1) #creates color palette 
+
+polar_styled_plot(data = dat, palette = pal) + geom_segment() #uses predetermined data and colors, with line segements 
+polar_styled_plot(data = dat, palette = pal) + geom_path() #uses predetermined data and colors, with a path that connects the data points
+polar_styled_plot(data = dat, palette = pal) + geom_point() #uses predetermined data and colors, with individual points of different size and color 
+
+```
+
+
+```{r tutorial 13}
+library(dplyr)
+
+dat1 <- sample_data(n = 2000, seed = 123) #creates data set with 2000 observations 
+dat2 <- sample_data(n = 100, seed = 456) |>  #creates another data set with 100 obervations 
+  mutate(y0 = .3 + y0 * .6, y1 = .3) #mutates y) and y1 columns of the data set 
+
+polar_styled_plot(palette = sample_canva(seed = 7)) +  #creates polar style plot and generates a color palette 
+  geom_segment(
+    data = dat1 |> mutate(size = size * 3) #
+  ) + 
+  geom_segment( #adds line segments to the plot using data 2 dataset
+    data = dat2 |> mutate(size = size / 5), #adjusts the size of the line segments 
+    lineend = "round", 
+    colour = "white" #adjusts the ends and the color of the segments 
+  ) +
+  geom_segment( #adds line segments to the plot using data set 2 
+    data = dat2 |> mutate(size = size / 40), #adjusts size of the line segments 
+    lineend = "round", 
+    colour = "#222222" #adjusts the ends and color of the segments 
+  ) +
+  geom_point( #adds points to the dataset using data set 2 
+    data = dat2 |> mutate(size = size * 2), #adjusts size of the points 
+    colour = "#222222" #adjusts color of the points 
+  )
+
+```
+
+
+```{r tutorial 14}
+dat <- sample_data(n = 2000, seed = 123) |> #creates data set with 2000 observations 
+  mutate(y1 = y0, size = size / 2) #adjusts the size and y1 columns of the data set 
+
+polar_styled_plot(palette = sample_canva(seed = 456)) + #creates a polar-styled plot and creates a color palette 
+  geom_segment(data = dat) + #adds line segments 
+  geom_segment(data = dat |> mutate(y1 = y1 - .2, y0 = y0 - .2)) + #adds line segments and adjusts y1 and y0 columns of the data 
+  geom_segment(data = dat |> mutate(y1 = y1 - .4, y0 = y0 - .4)) #adds line segments and adjusts y1 and y0 columns of the data 
+```
+
+
+```{r tutorial 15}
+dat <- sample_data(n = 1000, seed = 1) |> #creates data frame with 1000 obversations 
+  mutate(y1 = y0, size = size / 4) #mutates y1 and y0, so y1=y0. then adjusts the size 
+
+polar_styled_plot(palette = sample_canva(seed = 2)) + #creates a polar style plot, and adjusts the color by creating a color palette 
+  geom_segment(data = dat, linetype = "331311") #adds line segments and sets a specific linetype(which chopps the lines into smaller pieces)
+```
+
+
+```{r shading tutorial 1}
+library(rayshader)
+library(tibble)
+library(ambient)
+library(dplyr)
+library(ggplot2)
+library(ggthemes)
+library(tictoc)
+library(dplyr)
+#loading packages in 
+
+```
+
+
+```{r shading tutorial 2}
+is_within_circle <- function(x_coord, y_coord, x_center, y_center, radius) {
+  (x_coord - x_center)^2 + (y_coord - y_center)^2 < radius^2 #creating a helper function 
+}
+additive_circles <- function(n = 5, pixels = 1000, seed = NULL) { #generates 5 random circles 
+  
+  if(!is.null(seed)) set.seed(seed)
+  
+  art <- long_grid(
+    x = seq(0, 1, length.out = pixels),
+    y = seq(0, 1, length.out = pixels)
+  )
+  art$paint <- 0 #setting up canvas 
+  
+  for(i in 1:n) {
+    
+    x_center <- runif(1, min = .3, max = .7) 
+    y_center <- runif(1, min = .3, max = .7)
+    radius <- runif(1, min = .05, max = .25) #selects a random circle 
+    
+   
+    art <- art |>
+      mutate(
+        paint = paint + is_within_circle(
+          x, y, x_center, y_center, radius  # add +1 to all points inside the circle
+        )
+      )
+  }
+  
+  art$paint <- normalise(art$paint)  # normalise paint to [0, 1] range and return
+  return(art)
+}
+
+circle_art <- additive_circles(seed = 99) #generates output from the system above 
+circle_art
+
+ggplot(circle_art, aes(x, y, fill = paint)) + #creates plot
+  geom_raster(show.legend = FALSE) + #plots output, and hides legend
+  theme_void() #gets rid of backround information
+```
+
+
+```{r shading tutorial 3}
+circle_array <- circle_art |> #converts grid to matrix
+  as.array(value = paint) 
+
+circle_array[1:10, 1:10] #table with 10x10 rows and columns 
+
+
+```
+
+
+```{r shading tutorial 4}
+circle_array |> 
+  image(axes = FALSE, asp = 1, useRaster = TRUE) #directly plots matrix
+
+
+```
+
+
+```{r shading tutorial 5}
+circle_shadow <- ray_shade( #creates a pattern of shadows 
+  heightmap = circle_array, #specifies data matrix being used 
+  sunaltitude = 15, 
+  sunangle = 135, #specifies position of illumination source 
+  zscale = .01, #scale of z-axis
+  multicore = TRUE
+)
+
+plot_map(circle_shadow, rotate = 270) #plots the pattern
+```
+
+```{r shading tutorial 6}
+circle_scape <- circle_array |> #creates map
+  height_shade() |> #creates texture 
+  add_shadow( #adds color
+    shadowmap = circle_shadow, 
+    max_darken = .05 #specifies darkness of the map
+  )
+
+plot_map(circle_scape, rotate = 90) #plots map
+
+
+```
+
+
+```{r shading tutorial 7}
+sample_canva2 <- function(seed = NULL, n = 4) { #creates function that randomly chooses 4 colors to use 
+  
+  if(!is.null(seed)) set.seed(seed)
+  sample(ggthemes::canva_palettes, 1)[[1]] |> #specifies where function is getting it's colors from
+    (\(x) colorRampPalette(x)(n))()  
+}
+sample_canva2(seed = 1)
+sample_canva2(seed = 1, n = 7)
+
+
+```
+
+
+```{r shading tutorial 8}
+ridge_art <- function(seed = NULL, pixels = 3000) { #function that produces patterns with x amount of pixels 
+  
+  if(!is.null(seed)) set.seed(seed)
+  long_grid( #generates a grid of points 
+    x = seq(from = 0, to = 0.5, length.out = pixels), #defines x values 
+    y = seq(from = 0, to = 1, length.out = pixels) #defines y values 
+  ) |> 
+    mutate( #adds a new column
+      paint = fracture( #creates pattern
+        x = y, 
+        y = x,
+        noise = gen_simplex,
+        fractal = ridged, #specifies fracture pattern
+        octaves = 12,
+        frequency = 15,
+        seed = seed
+      ),
+      paint = normalise(paint)
+    ) |>
+    as.array(value = paint)
+}
+
+ridge_art(1234) |> #calls the ridge_art function 
+  image( #creates image 
+    axes = FALSE, #don't displays axis 
+    asp = 0.5, 
+    useRaster = TRUE, 
+    col = sample_canva2(seed = 777, n = 50) #specifies color 
+  ) 
+
+
+```
+
+```{r shading tutorial 9}
+
+generate_trees <- function(num_trees, xlim, ylim, seed = NULL) { #tree generation
+  set.seed(seed)
+  x <- runif(num_trees, min = xlim[1], max = xlim[2]) #x limits 
+  y <- runif(num_trees, min = ylim[1], max = ylim[2]) #y limits 
+  SpatialPoints(cbind(x, y))
+}
+
+
+shaded_ridge_art_with_trees <- function(seed = NULL, sun_altitude = 30, num_trees = 50) { #tree generation
+  
+  
+  art <- ridge_art(seed) #generates terrain heightmap
+  
+  tree_locs <- generate_trees(num_trees, xlim = c(0, 1), ylim = c(0, 1), seed = seed) #generates tree locations
+}
+
+shaded_ridge_art <- function(seed = NULL) { #creates object
+  
+  art <- ridge_art(seed) #creates variable 'art' with a fractal pattern
+  height_shade( #shaded repersentation of heightmap
+    heightmap = art,
+    texture = sample_canva2(seed, 256)
+  ) |>
+    add_shadow( #adds shadows to heightmap
+      shadowmap = ray_shade( #generates shadowmap 
+        heightmap = art, 
+        sunaltitude = 90, #specifies where light is coming from 
+        sunangle = 120, #also specifies where light is coming from 
+        multicore = TRUE, 
+        zscale = .5
+      ), 
+      max_darken = .05 #specifies darkness level
+    ) |>
+    plot_map() #plots the map 
+}
+
+tic()
+shaded_ridge_art(222) #generates image 
+
+
+```
+
+
+```{r shading tutorial 10}
+shaded_ridge_art(105) #alternative version 1
+shaded_ridge_art(106) #alternative version 2
+shaded_ridge_art(107) #alternative version 3
+
+
+```
+
+
+```{r shading tutorial 11}
+transform_to_curl_space <- function(x, y, frequency = 1, octaves = 10) { #defines new function
+  curl_noise( #produces new set of coordinates 
+    generator = fracture,
+    noise = gen_simplex, #defines gen_simplex as the base noise function
+    fractal = fbm, #combines multiple layers of simplex
+    octaves = octaves, #sets octave parameter of curl_noise as octave parameter of 'transform_to_...'
+    frequency = frequency, #sets frequency parameter of curl_noise as frequency parameter of 'transform_to'
+    x = x,
+    y = y
+  )
+}
+```
+
+
+```{r shading tutorial 12}
+define_worley_cells <- function(x, y, frequency = 3, octaves = 6) { #constructs a set of cells by creating function
+  fracture( #generates fracture noise 
+    noise = gen_worley, #defines noise parameter as gen_worley 
+    fractal = billow,
+    octaves = octaves,
+    frequency = frequency,
+    value = "cell", #derives data from specific points 
+    x = x, #x parameter of fracture
+    y = y #y paramater of fracture 
+  ) |>
+    rank() |> 
+    normalise()
+}
+
+
+```
+
+```{r shading tutorial 13}
+simplex_noise <- function(x, y, frequency = .1, octaves = 10) { #generates fractural noise by creating function
+  fracture(
+    noise = gen_simplex, #specific noise generator 
+    fractal = ridged, #specific fractural type 
+    octaves = octaves,
+    frequency = frequency,
+    x = x, #defines x parameter of fracture
+    y = y #defines y parameter of fracture 
+  ) |>
+    normalise()
+}
+
+
+```
+
+
+```{r shading tutorial 14}
+ice_floe <- function(seed) { #creates function 
+  
+  set.seed(seed)
+  
+  grid <- long_grid( #generates a grid of points 
+    x = seq(0, 1, length.out = 1500), #x limits 
+    y = seq(0, 1, length.out = 1000) #y limits 
+  )
+  
+  coords <- transform_to_curl_space(grid$x, grid$y) #moving the grid to curl space 
+  
+  grid |>
+    mutate(
+      cells = define_worley_cells(coords$x, coords$y), #generatres worley cells for each point 
+      paint = simplex_noise(x + cells, y + cells), #generates simplex noise for each point 
+      paint = normalise(paint)
+    ) |>
+    as.array(value = paint) #converts the result to array using paint value 
+}
+
+ice_floe(155) |> #callls ice_floe function
+  image(
+    axes = FALSE, #don't display axes 
+    asp = 1, #sets aspect ratio 
+    useRaster = TRUE, 
+    col = sample_canva2(seed = 111, n = 222) #specifies color 
+  )
+
+```
+
+
+```{r shading tutorial 15}
+shaded_ice_floe <- function(seed) { #creates function
+  
+  art <- ice_floe(seed) #generates the art 
+  
+  height_shade( #applies height shading to the image 
+    heightmap = art, #uses 'ice floe' as the heighmap
+    texture = sample_canva2(seed, 10) #specifying texture 
+  ) |>
+    add_shadow( #adds shadows 
+      shadowmap = ray_shade( #derives shadows 
+        heightmap = art, #use the ice floe as a heightmap 
+        sunaltitude = 15, #sets altitude of the light source 
+        sunangle = 180, #sets angle of the light source 
+        multicore = TRUE, 
+        zscale = .05 #defines how deep the z axis is 
+      ), 
+      max_darken = .05 #specifies how dark image is
+    ) |>
+    plot_map() #creates image 
+}
+
+shaded_ice_floe(5) #displays image 
+
+
+```
+
+
+```{r shading tutorial 16}
+shaded_ice_floe(888) #alternative image 1
+shaded_ice_floe(444) #alternative image 2
+shaded_ice_floe(88) #alternative image 3 
+
+
+```
+
+
+```{r shading tutorial 18}
+library(rayshader) #loading package 
+plot_3d( #specific matrix with lighting and shadow effects 
+  hillshade = circle_scape, #specifying matrix being used 
+  heightmap = circle_array,
+  theta = 200, #angle of viewpoint
+  phi = 15, #angle of viewpoint
+  zoom = .8, #zoom factor 
+  zscale = .001, #vertical scaling factor 
+  baseshape = "triangle", #shape of base surface 
+  background = "#222222", #backround color 
+  shadow = TRUE, # including shadows 
+  soliddepth = 0, #depth (as %) for solid colors 
+  solidcolor = "#111111", #color used for solid rendering 
+  windowsize = 1200
+)
+
+render_snapshot( #creates image 
+  filename = "circles_3d.png", #file name 
+  clear = FALSE
+)
+
+knitr::include_graphics("circles_3d.png") #displays image 
+
+
+```
+
+
+```{r pixel filters tutorial 1}
+library(dplyr)
+library(tibble)
+library(ggplot2)
+library(ggforce)
+library(ggfx)
+library(flametree)
+library(ambient)
+#loading in packages
+```
+
+
+
+```{r pixel filters tutorial 2}
+tree <- flametree_grow( #generates raw data 
+  seed = 1, 
+  time = 9, #specifies time steps for tree growth 
+  angle = c(-15, 15, 30)
+)
+tree
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
