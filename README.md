@@ -3,7 +3,7 @@
 
 ### rstudio::conf 2022
 
-by Danielle Navarro
+by Peter Nuñez
 
 -----
 
