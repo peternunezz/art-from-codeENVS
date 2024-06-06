@@ -1,100 +1,35 @@
-[Art from code](https://art-from-code.netlify.app/)
+[ENVS193-DS: Generative Art Assignment]
 ================
 
-### rstudio::conf 2022
+### rstudio::conf 2024
 
-by Peter
-
------
-
-:spiral_calendar: July 25 and 26, 2022  
-:alarm_clock:     09:00 - 17:00  
-:hotel:           Maryland 1
-:writing_hand:    [rstd.io/conf](http://rstd.io/conf)
+by Peter Nuñez
 
 -----
 
-## Overview
-
-Computer-generated artwork has been around for quite a while. The idea of using R for this purpose, however, is a little more recent. Designed originally as a programming language for academic statistical computing, R is now a mainstream language for data science and analytics. Can it also work as an artistic medium? Is there an overlap between our familiar data science workflows and the artistic process? Perhaps we can become better data scientists through art, and vice versa.
-
-This workshop provides a hands-on introduction to generative art in R. You’ll learn artistic techniques that generative artists use regularly in their work including flow fields, iterative function systems, and more. You’ll also learn about R packages that are specialized for generative art including jasmines, ambient, and ggfx. But more than that, you’ll learn how to reuse skills you already have as part of an artistic process: with a little work, ggplot2, dplyr, and Rcpp can become an artist's best friends. Finally, I’ll talk about how generative art helped me learn new programming skills and turned out to be valuable to me in the workplace.
-
-The assumed background is that you’re reasonably comfortable using R and RStudio, and have experience with tidyverse. There are places where C++, git/github, and blogdown are used, but these aren’t major parts of the workshop.
-
-## Course material
-
-Everything you need for the workshop is (or will be!) posted online at [art-from-code.netlify.app](https://art-from-code.netlify.app). 
-
-## Getting set up 
-
-### Option 1: Local install
-
-If you want to run the workshop locally, the easiest way to get set up is as follows. First, create project from GitHub, e.g., with the command
-
-``` r
-usethis::create_from_github(
-  repo_spec = "rstudio-conf-2022/art-from-code", 
-  destdir = "wherever/you/would/like"
-)
-```
-
-Then, within the project, install dependencies:
-
-``` r
-remotes::install_deps()
-```
-
-
-## Option 2: RStudio Cloud 
-
-An alternative option is to use RStudio Cloud. To do this, go to [rstudio.cloud](https://rstudio.cloud) and create a project from this GitHub repository [rstudio-conf-2022/art-from-code](https://github.com/rstudio-conf-2022/art-from-code).
-
-From there it's a two-step process. First, the cloud machine won't have the remotes package so you'll need to install that:
-
-``` r
-install.packages("remotes")
-```
-
-Then you can install all the dependencies listed in the DESCRIPTION file with:
-
-``` r
-remotes::install_deps()
-```
-
-
-## Schedule
-
-### Day 1
-
-| Time          | Activity                                                                              |
-| :------------ | :------------------------------------------------------------------------------------ |
-| 09:00 - 10:30 | Session 1: [Get started](https://art-from-code.netlify.com/day-1/session-1)           |
-| 10:30 - 11:00 | *Coffee break*                                                                        |
-| 11:00 - 12:30 | Session 2: [Spatial noise tricks](https://art-from-code.netlify.com/day-1/session-2)  |
-| 12:30 - 13:30 | *Lunch break*                                                                         |
-| 13:30 - 15:00 | Session 3: [Polygon tricks](https://art-from-code.netlify.com/day-1/session-3)        |
-| 15:00 - 15:30 | *Coffee break*                                                                        |
-| 15:30 - 17:00 | Session 4: [Shading tricks](https://art-from-code.netlify.com/day-1/session-4)        |
-
-### Day 2
-
-| Time          | Activity                                                                                  |
-| :------------ | :---------------------------------------------------------------------------------------- |
-| 09:00 - 10:30 | Session 1: [Iterated function systems](https://art-from-code.netlify.com/day-2/session-1) |
-| 10:30 - 11:00 | *Coffee break*                                                                            |
-| 11:00 - 12:30 | Session 2: [Tiles and tesselations](https://art-from-code.netlify.com/day-2/session-2)    |
-| 12:30 - 13:30 | *Lunch break*                                                                             |
-| 13:30 - 15:00 | Session 3: [Pixel shaders](https://art-from-code.netlify.com/day-2/session-3)             |
-| 15:00 - 15:30 | *Coffee break*                                                                            |
-| 15:30 - 17:00 | Session 4: [Wrap up](https://art-from-code.netlify.com/day-2/session-4)                   |
-
-## Instructor
-
-Danielle Navarro is a generative artist, data scientist, professional educator, mathematical psychologist, academic professor in recovery, open source R developer, and coauthor of “ggplot2: Elegant Graphics for Data Analysis” (3rd edition). She is currently a developer advocate at Voltron Data working with the Apache Arrow ecosystem. You can find her art at https://art.djnavarro.net, and other professional details at https://djnavarro.net. Danielle lives in Sydney, Australia with her two children and her Netflix subscription.
+:spiral_calendar: June 5th, 2024  
 
 -----
 
-![](https://i.creativecommons.org/l/by/4.0/88x31.png) This work is
-licensed under a [Creative Commons Attribution 4.0 International
-License](https://creativecommons.org/licenses/by/4.0/).
+## General Information
+
+This repo is for ENVS193-DS, for UC Santa Barbara's Spring quarter. This 'Choose Your Own' assignment was to follow along Danielle Navarro's 'ART FROM CODE', a tutorial on using Rstudio to computer generate artwork. This course has entailed getting familiar with Rstudio, and utilizing it for statistical analyses, as well as statistical analysis outside of Rstudio. This assignment involved using Rstudio in a more creative and unique way, and strengthening my coding skills outside of statistical analysis. I followed along Navarro's 'Get Started' tutorial, then moved on to their 'Shading Tricks' tutorial, and their 'Pixel Filters' tutorial. I ended this repo by creating my own art work using different components of each tutorial listed above.
+
+## Data and File Overview
+
+This is the link to Navarro's tutorials: (https://art-from-code.netlify.app/) 
+
+This is the link to Navarro's personal github repo: (https://github.com/rstudio-conf-2022/art-from-code.git)
+
+This is the link to my personal github repo: (https://github.com/peternunezz/art-from-codeENVS.git) 
+
+The 'art-from-code-CODE' file includes the Rproject. 
+The 'art-from-code-DATA' file includes all the data used for the coding. I linked the data to this directory before the chunk where the data was used. The output for the last tutorial for 'Shading Tricks'  is also included in this file. 
+All other files were created by Navarro. 
+
+Rendered Output: 
+
+## About me
+
+Peter Nuñez is a third year Environmental Science student at UC Santa Barbara. This was his first coding class, and this is the last assignment for this class. He is passionate about environmental justice, grassroots initiatives, and community driven solutions to our changing climate. You can reach him at peternunez@ucsb.edu. 
+
