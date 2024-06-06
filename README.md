@@ -24,7 +24,7 @@ This is the link to Navarro's personal github repo: (https://github.com/rstudio-
 This is the link to my personal github repo: (https://github.com/peternunezz/art-from-codeENVS.git) 
 
 The 'art-from-code-CODE' file includes the Rproject. 
-The 'art-from-code-DATA' file includes all the data used for the coding. I linked the data to this directory before the chunk where the data was used. The output for the last tutorial for 'Shading Tricks'  is also included in this file. 
+The 'art-from-code-DATA' file includes all the data used for the coding. I linked the data to this directory using the 'here' function, placed it before the chunk where the data was used, but is removed from the rendered version for simplicity. The output for the last tutorial for 'Shading Tricks'  is also included in this file. 
 All other files were created by Navarro. 
 
 Rendered Output: 
